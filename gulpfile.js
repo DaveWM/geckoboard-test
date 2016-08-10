@@ -6,6 +6,7 @@ var buffer = require('vinyl-buffer');
 var livereload = require('gulp-livereload');
 var mocha = require('gulp-mocha');
 var babel = require('babel-core/register');
+var sass = require('gulp-sass');
 
 gulp.task('js', () => {
   return browserify("./src/app.js")
@@ -14,6 +15,13 @@ gulp.task('js', () => {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(gulp.dest('dist'))
+    .pipe(livereload());
+})
+
+gulp.task('css', () => {
+  return gulp.src('./src/app.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./dist'))
     .pipe(livereload());
 })
 
@@ -27,9 +35,10 @@ gulp.task('test', () => {
     }));
 })
 
-gulp.task('watch', ['js'], () => {
+gulp.task('watch', ['js', 'css'], () => {
   livereload.listen();
   gulp.watch('./src/**/*.js*', ['js']);
+  gulp.watch('./src/**/*.scss', ['css']);
 })
 
 gulp.task('watch-test', () => {

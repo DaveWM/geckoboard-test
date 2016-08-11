@@ -3,5 +3,4 @@ import ReactDom from 'react-dom';
 
 import Geckometer from './components/geckometer.jsx';
 
-console.log(document.getElementById('app'));
-ReactDom.render(<Geckometer />, document.getElementById('app'));
+ReactDom.render(<Geckometer min={0} max={100} value={30} />, document.getElementById('app'));

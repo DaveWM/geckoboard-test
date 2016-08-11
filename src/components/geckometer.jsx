@@ -1,4 +1,5 @@
 import React from 'react';
+import {getSymbolFromCurrency} from 'currency-symbol-map';
 
 export function getAngle(min, max, value) {
   // if invalid, return 0
@@ -9,11 +10,12 @@ export function getAngle(min, max, value) {
   return (180 / (max - min)) * value;
 }
 
-let Geckometer = ({min, max, value}) => {
+let Geckometer = ({min, max, value, currency}) => {
   let needleTransform = `rotate(${getAngle(min, max, value)}, 50, 50)`;
+  let currencySymbol = currency && getSymbolFromCurrency(currency);
   return (
     <div className="geckometer">
-      <h1>{value}</h1>
+      <h1>{currencySymbol}{value}</h1>
       <div className="dial">
         <svg viewBox="0 0 100 53">
           <path className="outer-ring"
@@ -26,8 +28,8 @@ let Geckometer = ({min, max, value}) => {
           </g>
         </svg>
         <div className="labels">
-          <span>{min}</span>
-          <span>{max}</span>
+          <span>{currencySymbol}{min}</span>
+          <span>{currencySymbol}{max}</span>
         </div>
       </div>
     </div>
@@ -37,7 +39,8 @@ let Geckometer = ({min, max, value}) => {
 Geckometer.propTypes = {
   min: React.PropTypes.number.isRequired,
   max: React.PropTypes.number.isRequired,
-  value: React.PropTypes.number.isRequired
+  value: React.PropTypes.number.isRequired,
+  currency: React.PropTypes.string
 }
 
 export default Geckometer;

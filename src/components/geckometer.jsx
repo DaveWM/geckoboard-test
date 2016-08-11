@@ -7,7 +7,7 @@ export function getAngle(min, max, value) {
     return 0;
   }
   // return value in degrees
-  return (180 / (max - min)) * value;
+  return (180 / (max - min)) * (value - min);
 }
 
 let Geckometer = ({min, max, value, currency}) => {
